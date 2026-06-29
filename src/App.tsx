@@ -17,6 +17,32 @@ import { PRODUCTS } from './lib/paypal';
 import { VIDEO_URLS } from './config/videos';
 import { SITE_CONFIG } from './config/content';
 
+function AboutCard({ card, idx, progress }: { card: any; idx: number; progress: any }) {
+  const start = idx * 0.33;
+  const end = start + 0.33;
+  
+  const opacity = useTransform(
+    progress,
+    [start - 0.05, start + 0.1, end - 0.1, end + 0.05],
+    [0, 1, 1, 0]
+  );
+  const y = useTransform(
+    progress,
+    [start - 0.05, start + 0.1, end - 0.1, end + 0.05],
+    [40, 0, 0, -40]
+  );
+
+  return (
+    <motion.div
+      className="absolute top-1/2 -translate-y-1/2 right-6 sm:right-16 md:right-32 max-w-sm sm:max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-2xl shadow-2xl"
+      style={{ opacity, y, originY: 0 }}
+    >
+      <h3 className="text-white text-2xl sm:text-3xl font-light mb-5 tracking-tight">{card.title}</h3>
+      <p className="text-white/60 text-[15px] sm:text-[16px] leading-relaxed break-keep">{card.description}</p>
+    </motion.div>
+  );
+}
+
 export default function App() {
   const [entranceComplete, setEntranceComplete] = useState(false);
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
@@ -90,23 +116,20 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  /* ── Section 2 scroll-driven 3D text ── */
+  /* ── Section 2 scroll-driven ── */
   const section2Ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: section2Ref,
-    offset: ['start end', 'end start'],
+    offset: ['start start', 'end end'],
   });
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 15,
     damping: 32,
     mass: 1.8,
   });
-  const yScaleValue = useTransform(smoothProgress, [0, 1], [60, -120]);
-  const textOpacity = useTransform(smoothProgress, [0.3, 0.5], [0, 1]);
-  const transform3D = useMotionTemplate`rotateX(24deg) translateY(${yScaleValue}px) translateZ(15px)`;
 
   /* ── Destructure config for readability ── */
-  const { hero, cinematic, metrics, technology, architecture, footer } = SITE_CONFIG;
+  const { hero, about, metrics, technology, architecture, footer } = SITE_CONFIG;
 
   return (
     <div style={{ fontFamily: '"Space Mono", monospace' }}>
@@ -226,43 +249,44 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* ════════════════ SECTION 2: CINEMATIC TEXT ════════════════ */}
-      <section
-        ref={section2Ref}
-        className="relative h-screen h-[100dvh] flex items-center justify-center overflow-hidden"
-      >
-        {/* Video background */}
-        {VIDEO_URLS.section2 && (
-          <video
-            src={VIDEO_URLS.section2}
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-        )}
+      {/* ════════════════ SECTION 2: ABOUT CARDS ════════════════ */}
+      <section ref={section2Ref} className="relative h-[300vh] bg-[#010103]">
+        {/* Sticky Background Container */}
+        <div className="sticky top-0 h-screen h-[100dvh] overflow-hidden">
+          {VIDEO_URLS.section2 && (
+            <video
+              src={VIDEO_URLS.section2}
+              className="absolute inset-0 w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          )}
 
-        {/* Top gradient overlay */}
-        <div
-          className="absolute top-0 left-0 right-0 z-10"
-          style={{
-            height: 180,
-            background: 'linear-gradient(to bottom, #010103, transparent)',
-          }}
-        />
-
-        {/* 3D text content */}
-        <div className="relative z-20 max-w-5xl mx-auto" style={{ perspective: 400 }}>
-          <motion.p
-            className="font-sans font-normal text-[22px] sm:text-[30px] md:text-[36px] lg:text-[42px] text-white leading-[1.35] tracking-[-0.02em] select-none px-6 sm:px-12 text-center"
+          {/* Gradients to blend sections */}
+          <div className="absolute inset-0 bg-black/30 z-10" />
+          <div
+            className="absolute top-0 left-0 right-0 z-10"
             style={{
-              transform: transform3D,
-              opacity: textOpacity,
+              height: 180,
+              background: 'linear-gradient(to bottom, #010103, transparent)',
             }}
-          >
-            {cinematic.text}
-          </motion.p>
+          />
+          <div
+            className="absolute bottom-0 left-0 right-0 z-10"
+            style={{
+              height: 180,
+              background: 'linear-gradient(to top, #010103, transparent)',
+            }}
+          />
+
+          {/* Cards */}
+          <div className="absolute inset-0 z-20">
+            {about.cards.map((card, idx) => (
+              <AboutCard key={idx} card={card} idx={idx} progress={smoothProgress} />
+            ))}
+          </div>
         </div>
       </section>
 
