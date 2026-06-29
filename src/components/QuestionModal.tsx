@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, ArrowRight, Sparkles, MessageSquare } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import { getPhilosophicalSession, type DialogueSession } from '../utils/philosophicalEngine';
+import { getPhilosophicalSession, getGeminiPhilosophicalResponse, type DialogueSession } from '../utils/philosophicalEngine';
 
 interface Message {
   sender: 'user' | 'ai';
@@ -50,26 +50,40 @@ export function QuestionModal({
     setChatMessages([
       {
         sender: 'ai',
-        text: `Greetings. You asked: "${question}".\n\nAs an advocate for ${session.initialPhilosopher.name}'s school of thought, I argue that: ${session.initialPhilosopher.explanation}\n\nWhat are your initial thoughts on this perspective?`
+        text: session.getLocalResponse(question, '', 1)
       }
     ]);
     setStep(3);
   };
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!chatInput.trim() || !session) return;
 
     const userText = chatInput.trim();
-    setChatMessages(prev => [...prev, { sender: 'user', text: userText }]);
+    const updatedHistory = [...chatMessages, { sender: 'user' as const, text: userText }];
+    setChatMessages(updatedHistory);
     setChatInput('');
     setIsTyping(true);
 
+    try {
+      // 1. Try real Gemini API first
+      const geminiReply = await getGeminiPhilosophicalResponse(question, updatedHistory);
+      if (geminiReply) {
+        setChatMessages(prev => [...prev, { sender: 'ai', text: geminiReply }]);
+        setIsTyping(false);
+        return;
+      }
+    } catch (err) {
+      console.warn('Gemini call failed, falling back to local engine:', err);
+    }
+
+    // 2. Fallback to local template response
     setTimeout(() => {
-      const responseText = session.chatResponses(userText);
+      const responseText = session.getLocalResponse(question, userText, updatedHistory.length + 1);
       setChatMessages(prev => [...prev, { sender: 'ai', text: responseText }]);
       setIsTyping(false);
-    }, 1500);
+    }, 1000);
   };
 
   const handleGoToCounter = () => {
