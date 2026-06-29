@@ -19,15 +19,32 @@ export const SITE_CONFIG = {
     description: '',
   },
 
-  // 어바웃(철학) 섹션 - 숨 쉬는 텍스트(Breathing Text)
+  // 어바웃(철학) 섹션 - 벤토 박스 (Bento Box UI)
   about: {
-    phrases: [
-      '가장 깊은 침묵 속에서,',
-      '가장 큰 변화가 시작됩니다.',
-      '우리는 모두 답을 찾기 위해 길을 잃고,',
-      '하나의 질문으로 나만의 우주를 짓습니다.',
-      '당신은 오늘, 당신의 우주에 어떤 별을 띄웠나요?'
-    ],
+    title: 'The Inner Universe',
+    subtitle: 'Philosophy & Self-Reflection',
+    cards: {
+      vision: {
+        tag: 'VISION',
+        title: '나만의 우주를 만드는 여정',
+        description: '우리는 모두 답을 찾기 위해 길을 잃곤 합니다. 매일 주어지는 단 하나의 질문은 타인의 정답이 아닌, 오직 당신만의 견고하고 고유한 인생 철학과 우주관을 구축하는 안전한 사색의 통로가 됩니다.'
+      },
+      question: {
+        tag: 'DAILY REFLECTION',
+        title: "당신은 오늘, 당신의 우주에 어떤 별을 띄웠나요?",
+        actionText: 'Start Reflecting'
+      },
+      distance: {
+        tag: 'SAFE DISTANCE',
+        title: '안전한 온기, 깊은 사색',
+        description: '사람의 연결을 진심으로 원하면서도, 때로는 각자의 고유한 영역을 보존해야 하는 예민한 고슴도치처럼. 우리는 완벽히 독립적이면서도 평화롭게 연결되는 깊은 생각의 방을 제공합니다.'
+      },
+      stats: {
+        tag: 'METRICS',
+        title: '01 / 365',
+        description: '매일 쌓이는 생각의 자취'
+      }
+    }
   },
 
   // 성능 지표 섹션

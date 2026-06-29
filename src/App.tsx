@@ -17,35 +17,50 @@ import { PRODUCTS } from './lib/paypal';
 import { VIDEO_URLS } from './config/videos';
 import { SITE_CONFIG } from './config/content';
 
-function BreathingText({ phrase, idx, total, progress }: { phrase: string; idx: number; total: number; progress: any }) {
-  const step = 1 / total;
-  const start = idx * step;
-  const end = start + step;
-  
-  const opacity = useTransform(
-    progress,
-    [start, start + step * 0.2, end - step * 0.2, end],
-    [0, 1, 1, 0]
-  );
-  const scale = useTransform(
-    progress,
-    [start, end],
-    [0.95, 1.05]
-  );
-  const filter = useTransform(
-    progress,
-    [start, start + step * 0.2, end - step * 0.2, end],
-    ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']
-  );
-
+// Bento Card component for cleaner structure
+function BentoCard({ 
+  className = '', 
+  tag = '', 
+  title = '', 
+  description = '', 
+  children = null, 
+  yTransform, 
+  opacityTransform 
+}: { 
+  className?: string; 
+  tag?: string; 
+  title?: string; 
+  description?: string; 
+  children?: React.ReactNode; 
+  yTransform: any; 
+  opacityTransform: any;
+}) {
   return (
     <motion.div
-      className="absolute inset-0 flex items-center justify-center px-6 pointer-events-none mix-blend-screen"
-      style={{ opacity, scale, filter }}
+      style={{ y: yTransform, opacity: opacityTransform }}
+      className={`bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] ${className}`}
     >
-      <h3 className="text-white/90 text-[26px] sm:text-[36px] md:text-[46px] lg:text-[56px] font-serif font-light text-center tracking-[-0.03em] leading-tight drop-shadow-2xl word-keep-all">
-        {phrase}
-      </h3>
+      {/* Decorative gradient glowing spots inside cards */}
+      <div className="absolute -right-16 -top-16 w-32 h-32 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+      
+      <div>
+        {tag && (
+          <span className="text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.2em] text-white/40 uppercase block mb-4">
+            {tag}
+          </span>
+        )}
+        {title && (
+          <h3 className="text-white text-[20px] sm:text-[24px] md:text-[28px] font-light leading-snug tracking-tight mb-3">
+            {title}
+          </h3>
+        )}
+        {description && (
+          <p className="text-white/50 text-[14px] sm:text-[15px] leading-relaxed break-keep">
+            {description}
+          </p>
+        )}
+      </div>
+      {children}
     </motion.div>
   );
 }
@@ -256,14 +271,14 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* ════════════════ SECTION 2: BREATHING TEXT ════════════════ */}
-      <section ref={section2Ref} className="relative h-[400vh] bg-[#010103]">
+      {/* ════════════════ SECTION 2: BENTO BOX ABOUT ════════════════ */}
+      <section ref={section2Ref} className="relative h-[250vh] bg-[#010103]">
         {/* Sticky Background Container */}
-        <div className="sticky top-0 h-screen h-[100dvh] overflow-hidden">
+        <div className="sticky top-0 h-screen h-[100dvh] overflow-hidden flex flex-col justify-center">
           {VIDEO_URLS.section2 && (
             <video
               src={VIDEO_URLS.section2}
-              className="absolute inset-0 w-full h-full object-cover scale-105"
+              className="absolute inset-0 w-full h-full object-cover"
               autoPlay
               muted
               loop
@@ -271,34 +286,101 @@ export default function App() {
             />
           )}
 
-          {/* Gradients to blend sections */}
-          <div className="absolute inset-0 bg-black/40 z-10" />
+          {/* Gradients to blend sections & darken background slightly for content readibility */}
+          <div className="absolute inset-0 bg-black/60 z-10" />
           <div
             className="absolute top-0 left-0 right-0 z-10"
             style={{
-              height: 200,
-              background: 'linear-gradient(to bottom, #010103, transparent)',
+              height: 220,
+              background: 'linear-gradient(to bottom, #010103 20%, transparent)',
             }}
           />
           <div
             className="absolute bottom-0 left-0 right-0 z-10"
             style={{
-              height: 200,
-              background: 'linear-gradient(to top, #010103, transparent)',
+              height: 220,
+              background: 'linear-gradient(to top, #010103 20%, transparent)',
             }}
           />
 
-          {/* Texts */}
-          <div className="absolute inset-0 z-20">
-            {about.phrases.map((phrase, idx) => (
-              <BreathingText 
-                key={idx} 
-                phrase={phrase} 
-                idx={idx} 
-                total={about.phrases.length} 
-                progress={smoothProgress} 
+          {/* Bento Grid Content Container */}
+          <div className="relative z-20 max-w-6xl mx-auto w-full px-6 sm:px-10 py-12 md:py-20 flex flex-col justify-center">
+            {/* Header titles */}
+            <motion.div 
+              style={{
+                opacity: useTransform(smoothProgress, [0, 0.15, 0.85, 0.95], [0, 1, 1, 0]),
+                y: useTransform(smoothProgress, [0, 0.15, 0.85, 0.95], [20, 0, 0, -20])
+              }}
+              className="mb-8 md:mb-12 text-left"
+            >
+              <span className="text-white/40 text-[11px] sm:text-[12px] uppercase tracking-[0.25em] font-sans font-bold block mb-2">
+                {about.subtitle}
+              </span>
+              <h2 className="text-white text-[32px] sm:text-[44px] md:text-[52px] font-extralight tracking-tight leading-none">
+                {about.title}
+              </h2>
+            </motion.div>
+
+            {/* Bento Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-stretch">
+              
+              {/* Card 1: Vision (Large Card, spans 2 columns on medium screens) */}
+              <BentoCard
+                className="md:col-span-2 min-h-[220px] md:min-h-[280px]"
+                tag={about.cards.vision.tag}
+                title={about.cards.vision.title}
+                description={about.cards.vision.description}
+                yTransform={useTransform(smoothProgress, [0.05, 0.25, 0.75, 0.9], [50, 0, 0, -50])}
+                opacityTransform={useTransform(smoothProgress, [0.05, 0.2, 0.8, 0.9], [0, 1, 1, 0])}
               />
-            ))}
+
+              {/* Card 2: Question (Interactive Widget card) */}
+              <BentoCard
+                className="min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-white/[0.05] to-white/[0.01]"
+                tag={about.cards.question.tag}
+                title={about.cards.question.title}
+                yTransform={useTransform(smoothProgress, [0.1, 0.3, 0.7, 0.85], [50, 0, 0, -50])}
+                opacityTransform={useTransform(smoothProgress, [0.1, 0.25, 0.75, 0.85], [0, 1, 1, 0])}
+              >
+                <div className="mt-6">
+                  <button
+                    onClick={() => setIsQuestionModalOpen(true)}
+                    className="w-full bg-white text-black py-3 px-6 rounded-full font-medium text-[14px] hover:bg-white/90 transition-all flex items-center justify-center gap-2 group"
+                  >
+                    <span>{about.cards.question.actionText}</span>
+                    <span className="transform translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                </div>
+              </BentoCard>
+
+              {/* Card 3: Distance (Hedgehog Persona Card) */}
+              <BentoCard
+                className="md:col-span-2 min-h-[200px]"
+                tag={about.cards.distance.tag}
+                title={about.cards.distance.title}
+                description={about.cards.distance.description}
+                yTransform={useTransform(smoothProgress, [0.15, 0.35, 0.65, 0.8], [50, 0, 0, -50])}
+                opacityTransform={useTransform(smoothProgress, [0.15, 0.3, 0.7, 0.8], [0, 1, 1, 0])}
+              />
+
+              {/* Card 4: Metrics (01/365 Custom View) */}
+              <BentoCard
+                className="min-h-[200px] justify-center items-center text-center"
+                tag={about.cards.stats.tag}
+                yTransform={useTransform(smoothProgress, [0.2, 0.4, 0.6, 0.75], [50, 0, 0, -50])}
+                opacityTransform={useTransform(smoothProgress, [0.2, 0.35, 0.65, 0.75], [0, 1, 1, 0])}
+              >
+                <div className="flex flex-col items-center justify-center my-auto">
+                  <span className="text-[48px] sm:text-[56px] font-sans font-extralight tracking-tight text-white leading-none block">
+                    {about.cards.stats.title}
+                  </span>
+                  <span className="text-white/40 text-[13px] tracking-wide mt-2 block">
+                    {about.cards.stats.description}
+                  </span>
+                </div>
+              </BentoCard>
+
+            </div>
           </div>
         </div>
       </section>
