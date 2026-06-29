@@ -518,14 +518,21 @@ export default function App() {
             {architecture.layers.map((l) => (
               <div
                 key={l.num}
-                className="w-full max-w-md h-[72px] border border-white/10 rounded-lg flex items-center justify-between px-6"
+                className="w-full max-w-xl border border-white/10 rounded-[12px] bg-white/[0.02] backdrop-blur-sm p-6 text-left flex flex-col gap-2 transition-all hover:border-white/20 hover:bg-white/[0.04]"
               >
-                <span className="text-white/30 text-[12px] tracking-[0.15em] uppercase">
-                  Layer {l.num}
-                </span>
-                <span className="text-white text-[16px] sm:text-[18px] font-light">
-                  {l.name}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-white/35 text-[11px] tracking-[0.2em] font-mono uppercase">
+                    Step 0{l.num}
+                  </span>
+                  <h4 className="text-white text-[16px] sm:text-[18px] font-serif font-light">
+                    {l.name}
+                  </h4>
+                </div>
+                {l.desc && (
+                  <p className="text-white/50 text-[13px] sm:text-[14px] leading-relaxed font-sans mt-2 break-keep">
+                    {l.desc}
+                  </p>
+                )}
               </div>
             ))}
           </motion.div>

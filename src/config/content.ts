@@ -85,14 +85,26 @@ export const SITE_CONFIG = {
 
   // 아키텍처 섹션
   architecture: {
-    subtitle: 'Our Approach',
-    heading: 'Three pillars of thought.',
+    subtitle: 'Three steps of reflection',
+    heading: 'How to build your universe.',
     description:
-      'Observe the world. Analyze the fundamental nature of knowledge. Synthesize new perspectives and ideas.',
+      '복잡한 세상에서 한 걸음 물러나, 나만의 안전한 생각의 방에서 매일 하나의 별을 띄우는 여정입니다.',
     layers: [
-      { num: 1, name: 'Observe' },
-      { num: 2, name: 'Analyze' },
-      { num: 3, name: 'Synthesize' },
+      { 
+        num: 1, 
+        name: '질문을 마주하다 (Observe)', 
+        desc: '매일 아침 찾아오는 단 하나의 질문을 조용히 바라봅니다. 바쁜 일상 속에 묻혀있던 사소하고 본질적인 의문들을 일깨우는 시작점입니다.' 
+      },
+      { 
+        num: 2, 
+        name: '생각을 적다 (Reflect)', 
+        desc: '타인의 정답이나 시선은 중요하지 않습니다. 고슴도치가 나만의 둥지에서 쉼을 얻듯, 온전히 내 생각에 집중하여 솔직하게 적어 내려갑니다.' 
+      },
+      { 
+        num: 3, 
+        name: '우주를 완성하다 (Build)', 
+        desc: '매일 기록한 질문과 사색들이 하나씩 모여 반짝이는 별이 됩니다. 365일이 지나면, 누구보다 견고한 당신만의 인생 철학관(우주)이 완성됩니다.' 
+      },
     ],
   },
 
