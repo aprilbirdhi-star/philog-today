@@ -17,28 +17,35 @@ import { PRODUCTS } from './lib/paypal';
 import { VIDEO_URLS } from './config/videos';
 import { SITE_CONFIG } from './config/content';
 
-function AboutCard({ card, idx, progress }: { card: any; idx: number; progress: any }) {
-  const start = idx * 0.33;
-  const end = start + 0.33;
+function BreathingText({ phrase, idx, total, progress }: { phrase: string; idx: number; total: number; progress: any }) {
+  const step = 1 / total;
+  const start = idx * step;
+  const end = start + step;
   
   const opacity = useTransform(
     progress,
-    [start - 0.05, start + 0.1, end - 0.1, end + 0.05],
+    [start, start + step * 0.2, end - step * 0.2, end],
     [0, 1, 1, 0]
   );
-  const y = useTransform(
+  const scale = useTransform(
     progress,
-    [start - 0.05, start + 0.1, end - 0.1, end + 0.05],
-    [40, 0, 0, -40]
+    [start, end],
+    [0.95, 1.05]
+  );
+  const filter = useTransform(
+    progress,
+    [start, start + step * 0.2, end - step * 0.2, end],
+    ['blur(12px)', 'blur(0px)', 'blur(0px)', 'blur(12px)']
   );
 
   return (
     <motion.div
-      className="absolute top-1/2 -translate-y-1/2 right-6 sm:right-16 md:right-32 max-w-sm sm:max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-2xl shadow-2xl"
-      style={{ opacity, y, originY: 0 }}
+      className="absolute inset-0 flex items-center justify-center px-6 pointer-events-none mix-blend-screen"
+      style={{ opacity, scale, filter }}
     >
-      <h3 className="text-white text-2xl sm:text-3xl font-light mb-5 tracking-tight">{card.title}</h3>
-      <p className="text-white/60 text-[15px] sm:text-[16px] leading-relaxed break-keep">{card.description}</p>
+      <h3 className="text-white/90 text-[26px] sm:text-[36px] md:text-[46px] lg:text-[56px] font-serif font-light text-center tracking-[-0.03em] leading-tight drop-shadow-2xl word-keep-all">
+        {phrase}
+      </h3>
     </motion.div>
   );
 }
@@ -249,14 +256,14 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* ════════════════ SECTION 2: ABOUT CARDS ════════════════ */}
-      <section ref={section2Ref} className="relative h-[300vh] bg-[#010103]">
+      {/* ════════════════ SECTION 2: BREATHING TEXT ════════════════ */}
+      <section ref={section2Ref} className="relative h-[400vh] bg-[#010103]">
         {/* Sticky Background Container */}
         <div className="sticky top-0 h-screen h-[100dvh] overflow-hidden">
           {VIDEO_URLS.section2 && (
             <video
               src={VIDEO_URLS.section2}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover scale-105"
               autoPlay
               muted
               loop
@@ -265,26 +272,32 @@ export default function App() {
           )}
 
           {/* Gradients to blend sections */}
-          <div className="absolute inset-0 bg-black/30 z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
           <div
             className="absolute top-0 left-0 right-0 z-10"
             style={{
-              height: 180,
+              height: 200,
               background: 'linear-gradient(to bottom, #010103, transparent)',
             }}
           />
           <div
             className="absolute bottom-0 left-0 right-0 z-10"
             style={{
-              height: 180,
+              height: 200,
               background: 'linear-gradient(to top, #010103, transparent)',
             }}
           />
 
-          {/* Cards */}
+          {/* Texts */}
           <div className="absolute inset-0 z-20">
-            {about.cards.map((card, idx) => (
-              <AboutCard key={idx} card={card} idx={idx} progress={smoothProgress} />
+            {about.phrases.map((phrase, idx) => (
+              <BreathingText 
+                key={idx} 
+                phrase={phrase} 
+                idx={idx} 
+                total={about.phrases.length} 
+                progress={smoothProgress} 
+              />
             ))}
           </div>
         </div>
