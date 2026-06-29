@@ -84,10 +84,10 @@ export default function App() {
           paypalPayerId: details.payer?.payer_id || '',
         });
         console.log('[Firestore] Order saved:', orderId);
-        alert(`✅ 결제 완료! Order: ${orderId}`);
+        alert(`✅ Payment completed! Order: ${orderId}`);
       } catch (err) {
         console.error('[Firestore] Failed to save order:', err);
-        alert(`결제는 완료되었지만 기록 저장에 실패했습니다. Order: ${orderId}`);
+        alert(`Payment completed, but failed to save order logs. Order: ${orderId}`);
       }
     },
     [user]

@@ -26,19 +26,19 @@ export const SITE_CONFIG = {
     cards: {
       vision: {
         tag: 'VISION',
-        title: '나만의 우주를 만드는 여정',
-        description: '✔ 매일 하나의 질문\n\n✔ 나만의 생각 기록\n\n✔ 365일의 변화'
+        title: 'A Journey to Build Your Own Universe',
+        description: '✔ One question every day\n\n✔ A private record of your thoughts\n\n✔ A quiet transformation over 365 days'
       },
       question: {
-        tag: '오늘의 질문',
-        title: '당신은 오늘\n당신의 우주에 어떤 별을 띄웠나요?',
-        description: '매일 하나의 질문으로\n생각을 기록해 보세요.',
+        tag: 'DAILY REFLECTION',
+        title: 'What star did you place\nin your sky today?',
+        description: 'Keep a record of your thoughts,\none question at a time.',
         actionText: 'Start Reflecting'
       },
       distance: {
         tag: 'SAFE DISTANCE',
-        title: '안전한 온기, 깊은 사색',
-        description: '사람의 연결을 진심으로 원하면서도, 때로는 각자의 고유한 영역을 보존해야 하는 예민한 고슴도치처럼. 우리는 완벽히 독립적이면서도 평화롭게 연결되는 깊은 생각의 방을 제공합니다.'
+        title: 'Safe Distance, Deep Reflection',
+        description: 'Like a hedgehog seeking warmth while protecting its boundary, we offer a quiet, safe harbor to ponder deeply, fully independent yet peacefully connected.'
       },
       stats: {
         tag: 'METRICS',
@@ -88,22 +88,22 @@ export const SITE_CONFIG = {
     subtitle: 'Three steps of reflection',
     heading: 'How to build your universe.',
     description:
-      '복잡한 세상에서 한 걸음 물러나, 나만의 안전한 생각의 방에서 매일 하나의 별을 띄우는 여정입니다.',
+      'Step back from a busy world, and float a single star in your private space of contemplation each day.',
     layers: [
       { 
         num: 1, 
-        name: '질문을 마주하다 (Observe)', 
-        desc: '매일 아침 찾아오는 단 하나의 질문을 조용히 바라봅니다. 바쁜 일상 속에 묻혀있던 사소하고 본질적인 의문들을 일깨우는 시작점입니다.' 
+        name: 'Observe the Question', 
+        desc: 'Meet the single question that arrives each morning. Wake up the subtle, essential inquiries buried beneath the noise of a busy day.' 
       },
       { 
         num: 2, 
-        name: '생각을 적다 (Reflect)', 
-        desc: '타인의 정답이나 시선은 중요하지 않습니다. 고슴도치가 나만의 둥지에서 쉼을 얻듯, 온전히 내 생각에 집중하여 솔직하게 적어 내려갑니다.' 
+        name: 'Reflect Inward', 
+        desc: 'Put aside the answers of others. Like a hedgehog resting in its nest, focus entirely on your own voice and write honestly.' 
       },
       { 
         num: 3, 
-        name: '우주를 완성하다 (Build)', 
-        desc: '매일 기록한 질문과 사색들이 하나씩 모여 반짝이는 별이 됩니다. 365일이 지나면, 누구보다 견고한 당신만의 인생 철학관(우주)이 완성됩니다.' 
+        name: 'Build Your Universe', 
+        desc: 'Daily reflections gather to become glowing stars. Over 365 days, a unique, solid universe of your own philosophy is built.' 
       },
     ],
   },

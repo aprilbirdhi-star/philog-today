@@ -94,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
     } catch (err: any) {
-      setError(err.message || 'Google 로그인 실패');
+      setError(err.message || 'Google sign-in failed');
       throw err;
     }
   };
@@ -105,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const provider = new OAuthProvider('apple.com');
       await signInWithPopup(auth, provider);
     } catch (err: any) {
-      setError(err.message || 'Apple 로그인 실패');
+      setError(err.message || 'Apple sign-in failed');
       throw err;
     }
   };
@@ -115,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setError(null);
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err: any) {
-      setError(err.message || '이메일 로그인 실패');
+      setError(err.message || 'Email sign-in failed');
       throw err;
     }
   };
@@ -125,7 +125,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setError(null);
       await createUserWithEmailAndPassword(auth, email, password);
     } catch (err: any) {
-      setError(err.message || '회원가입 실패');
+      setError(err.message || 'Sign-up failed');
       throw err;
     }
   };
@@ -134,7 +134,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await firebaseSignOut(auth);
     } catch (err: any) {
-      setError(err.message || '로그아웃 실패');
+      setError(err.message || 'Sign-out failed');
     }
   };
 
