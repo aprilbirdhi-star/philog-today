@@ -2,7 +2,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useState } from 'react';
 
-export function QuestionModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+export function QuestionModal({ 
+  isOpen, 
+  onClose,
+  onSuccess
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  onSuccess?: () => void;
+}) {
   const [question, setQuestion] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -12,6 +20,7 @@ export function QuestionModal({ isOpen, onClose }: { isOpen: boolean; onClose: (
     
     // 임시로 성공 화면 표시 (추후 Firebase 연동 가능)
     setIsSubmitted(true);
+    if (onSuccess) onSuccess();
     setTimeout(() => {
       onClose();
       setTimeout(() => {

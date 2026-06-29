@@ -12,6 +12,7 @@ import { createOrder } from './lib/firestore';
 import { PRODUCTS } from './lib/paypal';
 import { VIDEO_URLS } from './config/videos';
 import { SITE_CONFIG } from './config/content';
+import { AuthModal } from './components/AuthModal';
 
 // Bento Card component for cleaner structure
 function BentoCard({
@@ -65,7 +66,38 @@ function BentoCard({
 export default function App() {
   const [entranceComplete, setEntranceComplete] = useState(false);
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
-  const { user } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [questionCount, setQuestionCount] = useState(() => Number(localStorage.getItem('philog_question_count') || 0));
+  const { user, profile } = useAuth();
+  
+  const hasActiveSubscription = profile?.subscription?.status === 'active';
+
+  const handleOpenQuestionModal = () => {
+    if (hasActiveSubscription) {
+      setIsQuestionModalOpen(true);
+      return;
+    }
+    if (questionCount >= 7) {
+      if (!user) {
+        alert("You have used all 7 free trial entries. Sign up now to save your thoughts and continue your journey!");
+        setIsAuthModalOpen(true);
+      } else {
+        alert("You have reached the limit of your 7-question free trial. Please subscribe to a plan below for unlimited access!");
+        const pricingSection = document.getElementById('pricing');
+        if (pricingSection) {
+          pricingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      return;
+    }
+    setIsQuestionModalOpen(true);
+  };
+
+  const handleQuestionSubmitSuccess = () => {
+    const newCount = questionCount + 1;
+    setQuestionCount(newCount);
+    localStorage.setItem('philog_question_count', String(newCount));
+  };
 
   /* ── PayPal 결제 완료 → Firestore 저장 ── */
   const handlePayPalSuccess = useCallback(
@@ -244,7 +276,7 @@ export default function App() {
                 }}
               >
                 <button
-                  onClick={() => setIsQuestionModalOpen(true)}
+                  onClick={handleOpenQuestionModal}
                   className="bg-white text-black px-8 py-3 rounded-full font-medium text-[15px] hover:bg-white/90 transition-colors"
                 >
                   {hero.buttonText}
@@ -329,7 +361,7 @@ export default function App() {
             >
               <div className="mt-6">
                 <button
-                  onClick={() => setIsQuestionModalOpen(true)}
+                  onClick={handleOpenQuestionModal}
                   className="w-full bg-white text-black py-3 px-6 rounded-full font-medium text-[14px] hover:bg-white/90 transition-all flex items-center justify-center gap-2 group font-sans"
                 >
                   <span>{about.cards.question.actionText}</span>
@@ -540,7 +572,7 @@ export default function App() {
       </section>
 
       {/* ════════════════ SECTION 6: PRICING ════════════════ */}
-      <section className="min-h-screen bg-black py-32 px-6">
+      <section id="pricing" className="min-h-screen bg-black py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             className="text-center mb-20"
@@ -730,6 +762,12 @@ export default function App() {
       <QuestionModal
         isOpen={isQuestionModalOpen}
         onClose={() => setIsQuestionModalOpen(false)}
+        onSuccess={handleQuestionSubmitSuccess}
+      />
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
       />
     </div>
   );
