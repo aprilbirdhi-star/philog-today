@@ -11,11 +11,12 @@ export const SITE_CONFIG = {
 
   // 히어로 섹션
   hero: {
-    titleLeft: ['Mind', 'And World'],
-    titleRight: ['Deep', 'Thoughts'],
+    titleLeft: ['고슴도치', '노트', '커피', '책', '새벽'],
+    titleRight: ['Every change', 'begins', 'with one question.'],
+    buttonText: 'Start Thinking',
+    buttonSubtext: "Today's Question",
     watermark: 'PHILOSOPHY',
-    description:
-      'A global portfolio and e-commerce platform dedicated to philosophical discourse, existential inquiries, and exclusive digital content for the wandering mind.',
+    description: '',
   },
 
   // 시네마틱 텍스트 섹션

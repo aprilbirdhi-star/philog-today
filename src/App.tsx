@@ -173,37 +173,50 @@ export default function App() {
             {/* Left column */}
             <div className="flex flex-col gap-4">
               <h1
-                className="text-white font-light leading-[0.95] tracking-[-0.03em]"
-                style={{ fontSize: 'clamp(40px, 10vw, 100px)' }}
+                className="text-white font-light leading-[1.1] tracking-[-0.03em]"
+                style={{ fontSize: 'clamp(32px, 6vw, 70px)' }}
               >
-                <ScrambleIn text={hero.titleLeft[0]} delay={200} triggered={entranceComplete} />
-                <br />
-                <ScrambleIn text={hero.titleLeft[1]} delay={500} triggered={entranceComplete} />
+                {hero.titleLeft.map((text, idx) => (
+                  <div key={idx}>
+                    <ScrambleIn text={text} delay={200 + idx * 150} triggered={entranceComplete} />
+                  </div>
+                ))}
+              </h1>
+            </div>
+
+            {/* Right column & Button */}
+            <div className="flex flex-col gap-8 md:items-end md:text-right mt-12 md:mt-0">
+              <h1
+                className="text-white font-light leading-[1.1] tracking-[-0.03em] text-left md:text-right"
+                style={{ fontSize: 'clamp(32px, 6vw, 70px)' }}
+              >
+                {hero.titleRight.map((text, idx) => (
+                  <div key={idx}>
+                    <ScrambleIn text={text} delay={800 + idx * 150} triggered={entranceComplete} />
+                  </div>
+                ))}
               </h1>
 
-              <motion.p
-                className="max-w-sm text-[13px] sm:text-[15px] text-white/60 leading-relaxed"
-                initial={{ opacity: 0, y: 25 }}
+              {/* Button area */}
+              <motion.div
+                className="flex flex-col items-start md:items-end gap-3 mt-4"
+                initial={{ opacity: 0, y: 20 }}
                 animate={entranceComplete ? { opacity: 1, y: 0 } : {}}
                 transition={{
                   duration: 0.9,
                   ease: [0.215, 0.61, 0.355, 1.0],
-                  delay: 0.2,
+                  delay: 1.2,
                 }}
               >
-                {hero.description}
-              </motion.p>
+                <button className="bg-white text-black px-8 py-3 rounded-full font-medium text-[15px] hover:bg-white/90 transition-colors">
+                  {hero.buttonText}
+                </button>
+                <div className="flex flex-col items-center md:items-end gap-1 text-white/50 text-[13px] mt-2">
+                  <span className="animate-bounce text-[16px]">↓</span>
+                  <span className="uppercase tracking-widest">{hero.buttonSubtext}</span>
+                </div>
+              </motion.div>
             </div>
-
-            {/* Right heading */}
-            <h1
-              className="text-white font-light leading-[0.95] tracking-[-0.03em] text-left md:text-right"
-              style={{ fontSize: 'clamp(40px, 10vw, 100px)' }}
-            >
-              <ScrambleIn text={hero.titleRight[0]} delay={700} triggered={entranceComplete} />
-              <br />
-              <ScrambleIn text={hero.titleRight[1]} delay={1000} triggered={entranceComplete} />
-            </h1>
           </div>
         </motion.div>
       </section>
