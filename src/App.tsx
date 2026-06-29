@@ -14,19 +14,19 @@ import { VIDEO_URLS } from './config/videos';
 import { SITE_CONFIG } from './config/content';
 
 // Bento Card component for cleaner structure
-function BentoCard({ 
-  className = '', 
-  tag = '', 
-  title = '', 
-  description = '', 
-  children = null, 
-  delay = 0 
-}: { 
-  className?: string; 
-  tag?: string; 
-  title?: string; 
-  description?: string; 
-  children?: React.ReactNode; 
+function BentoCard({
+  className = '',
+  tag = '',
+  title = '',
+  description = '',
+  children = null,
+  delay = 0
+}: {
+  className?: string;
+  tag?: string;
+  title?: string;
+  description?: string;
+  children?: React.ReactNode;
   delay?: number;
 }) {
   return (
@@ -35,11 +35,11 @@ function BentoCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay, ease: [0.215, 0.61, 0.355, 1] }}
-      className={`bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] ${className}`}
+      className={`bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[20px] p-6 sm:p-8 flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05] ${className}`}
     >
       {/* Decorative gradient glowing spots inside cards */}
       <div className="absolute -right-16 -top-16 w-32 h-32 bg-white/5 rounded-full blur-3xl pointer-events-none" />
-      
+
       <div>
         {tag && (
           <span className="text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.2em] text-white/40 uppercase block mb-4">
@@ -47,12 +47,12 @@ function BentoCard({
           </span>
         )}
         {title && (
-          <h3 className="text-white text-[20px] sm:text-[24px] md:text-[28px] font-light leading-snug tracking-tight mb-3">
+          <h3 className="text-white text-[20px] sm:text-[24px] md:text-[28px] font-serif font-light leading-snug tracking-tight mb-3 whitespace-pre-line">
             {title}
           </h3>
         )}
         {description && (
-          <p className="text-white/50 text-[14px] sm:text-[15px] leading-relaxed break-keep">
+          <p className="text-white/50 text-[14px] sm:text-[15px] font-sans leading-relaxed break-keep whitespace-pre-line max-w-md">
             {description}
           </p>
         )}
@@ -264,7 +264,7 @@ export default function App() {
         {VIDEO_URLS.section2 && (
           <video
             src={VIDEO_URLS.section2}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-[60%_40%]"
             autoPlay
             muted
             loop
@@ -292,7 +292,7 @@ export default function App() {
         {/* Bento Grid Content Container */}
         <div className="relative z-20 max-w-6xl mx-auto w-full px-6 sm:px-10 flex flex-col justify-center">
           {/* Header titles */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -309,14 +309,14 @@ export default function App() {
 
           {/* Bento Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-stretch">
-            
+
             {/* Card 1: Vision (Large Card, spans 2 columns on medium screens) */}
             <BentoCard
               className="md:col-span-2 min-h-[220px] md:min-h-[280px]"
               tag={about.cards.vision.tag}
               title={about.cards.vision.title}
               description={about.cards.vision.description}
-              delay={0}
+              delay={0.2}
             />
 
             {/* Card 2: Question (Interactive Widget card) */}
@@ -324,6 +324,7 @@ export default function App() {
               className="min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-white/[0.05] to-white/[0.01]"
               tag={about.cards.question.tag}
               title={about.cards.question.title}
+              description={about.cards.question.description}
               delay={0.1}
             >
               <div className="mt-6">
@@ -343,14 +344,14 @@ export default function App() {
               tag={about.cards.distance.tag}
               title={about.cards.distance.title}
               description={about.cards.distance.description}
-              delay={0.2}
+              delay={0.3}
             />
 
             {/* Card 4: Metrics (01/365 Custom View) */}
             <BentoCard
               className="min-h-[200px] justify-center items-center text-center"
               tag={about.cards.stats.tag}
-              delay={0.3}
+              delay={0.4}
             >
               <div className="flex flex-col items-center justify-center my-auto">
                 <span className="text-[48px] sm:text-[56px] font-serif font-light tracking-tight text-white leading-none block">

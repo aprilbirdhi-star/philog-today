@@ -27,11 +27,12 @@ export const SITE_CONFIG = {
       vision: {
         tag: 'VISION',
         title: '나만의 우주를 만드는 여정',
-        description: '우리는 모두 답을 찾기 위해 길을 잃곤 합니다. 매일 주어지는 단 하나의 질문은 타인의 정답이 아닌, 오직 당신만의 견고하고 고유한 인생 철학과 우주관을 구축하는 안전한 사색의 통로가 됩니다.'
+        description: '✔ 매일 하나의 질문\n\n✔ 나만의 생각 기록\n\n✔ 365일의 변화'
       },
       question: {
-        tag: 'DAILY REFLECTION',
-        title: "당신은 오늘, 당신의 우주에 어떤 별을 띄웠나요?",
+        tag: '오늘의 질문',
+        title: '당신은 오늘\n당신의 우주에 어떤 별을 띄웠나요?',
+        description: '매일 하나의 질문으로\n생각을 기록해 보세요.',
         actionText: 'Start Reflecting'
       },
       distance: {
@@ -41,8 +42,8 @@ export const SITE_CONFIG = {
       },
       stats: {
         tag: 'METRICS',
-        title: '01 / 365',
-        description: '매일 쌓이는 생각의 자취'
+        title: '0 Questions',
+        description: 'Start Today'
       }
     }
   },
