@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, ArrowRight, CornerDownLeft, Sparkles, MessageSquare, Compass, Shield } from 'lucide-react';
+import { X, Send, ArrowRight, Sparkles, MessageSquare } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { getPhilosophicalSession, type DialogueSession } from '../utils/philosophicalEngine';
 
