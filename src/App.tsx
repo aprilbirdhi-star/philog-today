@@ -9,6 +9,7 @@ import {
 import { Navbar } from './components/Navbar';
 import { ScrambleIn } from './components/ScrambleText';
 import { ConnectAILabLogo } from './components/ConnectAILabLogo';
+import { QuestionModal } from './components/QuestionModal';
 import PayPalCheckoutButton from './components/payment/PayPalCheckoutButton';
 import { useAuth } from './contexts/AuthContext';
 import { createOrder } from './lib/firestore';
@@ -18,6 +19,7 @@ import { SITE_CONFIG } from './config/content';
 
 export default function App() {
   const [entranceComplete, setEntranceComplete] = useState(false);
+  const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
   const { user } = useAuth();
 
   /* ── PayPal 결제 완료 → Firestore 저장 ── */
@@ -208,7 +210,10 @@ export default function App() {
                   delay: 1.2,
                 }}
               >
-                <button className="bg-white text-black px-8 py-3 rounded-full font-medium text-[15px] hover:bg-white/90 transition-colors">
+                <button
+                  onClick={() => setIsQuestionModalOpen(true)}
+                  className="bg-white text-black px-8 py-3 rounded-full font-medium text-[15px] hover:bg-white/90 transition-colors"
+                >
                   {hero.buttonText}
                 </button>
                 <div className="flex flex-col items-center md:items-end gap-1 text-white/50 text-[13px] mt-2">
@@ -612,6 +617,12 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* 모달 창 */}
+      <QuestionModal
+        isOpen={isQuestionModalOpen}
+        onClose={() => setIsQuestionModalOpen(false)}
+      />
     </div>
   );
 }
