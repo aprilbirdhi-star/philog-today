@@ -11,7 +11,7 @@ export const SITE_CONFIG = {
 
   // 히어로 섹션
   hero: {
-    titleLeft: ['고슴도치', '노트', '커피', '책', '새벽'],
+    titleLeft: [],
     titleRight: ['Every change', 'begins', 'with one question.'],
     buttonText: 'Start Thinking',
     buttonSubtext: "Today's Question",
